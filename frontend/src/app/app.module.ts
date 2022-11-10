@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
+import {MenubarModule} from 'primeng/menubar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,6 +18,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     BrowserModule,
     AppRoutingModule,
     TabsModule.forRoot(),
+    MenubarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
