@@ -131,3 +131,5 @@ dist
 
 #macos
 .DS_Store
+
+sqlconfig.json
