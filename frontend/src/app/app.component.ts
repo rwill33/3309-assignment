@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { Service } from './services/service.service';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +11,26 @@ export class AppComponent {
   title = 'frontend';
   public items: MenuItem[];
 
-  constructor() {
+  constructor(private service: Service) {
     this.items = [
       {
-        label: "Item",
+        label: "Accounts",
+        icon: 'pi pi-user',
         items: [
           {
-            label: 'Item 2'
+            label: 'Sign Up',
+            routerLink: 'sign-up'
+          },
+          {
+            label: 'Log In',
+            routerLink: 'sign-in'
+          },
+          {
+            label: 'Sign Out',
+            command: () => {
+              this.service.loggedIn = false;
+            },
+            routerLink: 'sign-in'
           }
         ]
       }
