@@ -32,7 +32,9 @@ export class SignInComponent implements OnInit {
   public async signIn() {
     if (this.signInForm.valid == true) {
       if (this.checkValidUser()) {
+        this.service.username = this.signInForm.controls.username.value!;
         this.service.loggedIn = true;
+        this.router.navigate(['user-stores']);
       } else {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid username or password.', life: 3000 });
       }

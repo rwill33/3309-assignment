@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class Service {
   public loggedIn: boolean = false;
+  public username: string = '';
   private url: string = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
@@ -17,5 +18,13 @@ export class Service {
 
   public getUsers(): Observable<any> {
     return this.http.get<any>(this.url + '/users');
+  }
+
+  public putStore(store: any): Observable<any> {
+    return this.http.put<any>(this.url + '/store', store);
+  }
+
+  public getUserStores(): Observable<any> {
+    return this.http.get<any>(this.url + '/stores/' + this.username);
   }
 }

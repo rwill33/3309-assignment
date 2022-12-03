@@ -18,12 +18,12 @@ export class AppComponent {
         icon: 'pi pi-user',
         items: [
           {
-            label: 'Sign Up',
-            routerLink: 'sign-up'
-          },
-          {
             label: 'Log In',
             routerLink: 'sign-in'
+          },
+          {
+            label: 'Sign Up',
+            routerLink: 'sign-up'
           },
           {
             label: 'Sign Out',
@@ -32,6 +32,20 @@ export class AppComponent {
             },
             routerLink: 'sign-in'
           }
+        ]
+      },
+      {
+        label: "Stores",
+        icon: 'pi pi-home',
+        items: [
+          {
+            label: "Create Store",
+            routerLink: 'store-create'
+          },
+          {
+            label: "Your Store(s)",
+            routerLink: 'user-stores'
+          },
         ]
       }
     ];

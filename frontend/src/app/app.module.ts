@@ -34,6 +34,10 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { StoreCreateComponent } from './components/store-create/store-create.component';
+import { AuthenticationService } from './services/authentication.service';
+import { UserStoresComponent } from './components/user-stores/user-stores.component';
+import { ViewStoresComponent } from './components/view-stores/view-stores.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +45,9 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
     NavbarComponent,
     SignUpComponent,
     SignInComponent,
+    StoreCreateComponent,
+    UserStoresComponent,
+    ViewStoresComponent,
   ],
   imports: [
     HttpClientModule,
@@ -69,7 +76,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
     ConfirmDialogModule,
     TabsModule.forRoot(),
   ],
-  providers: [MessageService, ConfirmationService ],
+  providers: [MessageService, ConfirmationService, AuthenticationService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
