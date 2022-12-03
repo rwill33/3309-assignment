@@ -11,6 +11,7 @@ export class Service {
   public cart: any[] = [];
   public products: any[] = [];
   public savedAddresses: any[] = [];
+  public customerOrders: any[] = [];
   private url: string = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
@@ -57,5 +58,9 @@ export class Service {
 
   public addCustomerAddresses(address: any): Observable<any> {
     return this.http.put<any>(this.url + '/customerAddress', address);
+  }
+
+  public getCustomerOrders() {
+    return this.http.get<any>(this.url + '/order?username=' + this.username);
   }
 }

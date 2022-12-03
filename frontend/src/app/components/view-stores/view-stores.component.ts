@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Service } from 'src/app/services/service.service';
 
 @Component({
   selector: 'app-view-stores',
@@ -7,11 +6,10 @@ import { Service } from 'src/app/services/service.service';
   styleUrls: ['./view-stores.component.css']
 })
 export class ViewStoresComponent implements OnInit {
-  @Input() stores!: any[];
-  public storeFields: string[];
+  @Input() objects!: any[];
+  @Input() fields!: string[];
 
   constructor() {
-    this.storeFields = ['storeName', 'storeId', 'city', 'country', 'description', 'postalCode', 'province', 'streetAddress1', 'streetAddress2']
   }
 
   ngOnInit(): void {

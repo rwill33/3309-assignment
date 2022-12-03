@@ -54,6 +54,11 @@ export class AppComponent {
           },
         ]
       },
+      {
+        label: "Orders",
+        icon: 'pi pi-dollar',
+        routerLink: 'orders'
+      }
     ];
   }
 }

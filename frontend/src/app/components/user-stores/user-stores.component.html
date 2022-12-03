@@ -1,3 +1,5 @@
 <h3 class="d-flex justify-content-center m-3">Your Store(s)</h3>
 
-<app-view-stores [stores]="userStores"></app-view-stores>
+<app-view-stores [objects]="userStores"
+    [fields]="['storeName', 'storeId', 'city', 'country', 'description', 'postalCode', 'province', 'streetAddress1', 'streetAddress2']">
+</app-view-stores>

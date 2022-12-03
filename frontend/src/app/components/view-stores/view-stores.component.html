@@ -1,16 +1,14 @@
-<p-table [value]="stores" [rows]="10" [paginator]="true" [rowHover]="true" [filterDelay]="0">
+<p-table [value]="objects" [rows]="10" [paginator]="true" [rowHover]="true" [filterDelay]="0">
     <ng-template pTemplate="header">
         <tr>
-            <th *ngFor="let field of storeFields" pSortableColumn="field" style="text-align: center">
+            <th *ngFor="let field of fields" style="text-align: center">
                 {{field}}
-                <p-sortIcon field="field"></p-sortIcon>
-                <p-columnFilter type="text" field="field" display="menu"></p-columnFilter>
             </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-store>
         <tr>
-            <td *ngFor="let field of storeFields">
+            <td *ngFor="let field of fields">
                 <div style="text-align: center; width: 100%">{{store[field]}}</div>
             </td>
         </tr>

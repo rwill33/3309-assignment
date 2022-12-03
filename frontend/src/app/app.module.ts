@@ -45,6 +45,7 @@ import { ViewStoresComponent } from './components/view-stores/view-stores.compon
 import { SearchProductsComponent } from './components/search-products/search-products.component';
 import { ViewProductsComponent } from './components/view-products/view-products.component';
 import { BuyCartComponent } from './components/buy-cart/buy-cart.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { BuyCartComponent } from './components/buy-cart/buy-cart.component';
     SearchProductsComponent,
     ViewProductsComponent,
     BuyCartComponent,
+    OrdersComponent,
   ],
   imports: [
     HttpClientModule,
