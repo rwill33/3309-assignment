@@ -7,9 +7,9 @@ import { Service } from 'src/app/services/service.service';
   styleUrls: ['./user-stores.component.css']
 })
 export class UserStoresComponent implements OnInit {
-  public userStores: any[] = [];
+  public storeOrders: any[] = [];
 
-  constructor(private service: Service) {
+  constructor(public service: Service) {
     this.populateUserStores();
   }
 
@@ -17,7 +17,12 @@ export class UserStoresComponent implements OnInit {
   }
 
   public async populateUserStores() {
-    this.userStores = await this.service.getUserStores().toPromise();
+    if (this.service.stores.length == 0) {
+      this.service.stores = await this.service.getUserStores().toPromise();
+    }
+    for (let i = 0; i < this.service.stores.length; i++) {
+      this.storeOrders.push(await this.service.getStoreOrders(this.service.stores[i].storeId).toPromise());
+    }
   }
 
 }

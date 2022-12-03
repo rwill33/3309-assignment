@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class Service {
   public loggedIn: boolean = false;
   public username: string = '';
+  public stores: any[] = [];
   public cart: any[] = [];
   public products: any[] = [];
   public savedAddresses: any[] = [];
@@ -62,5 +63,9 @@ export class Service {
 
   public getCustomerOrders() {
     return this.http.get<any>(this.url + '/order?username=' + this.username);
+  }
+
+  public getStoreOrders(storeId: number) {
+    return this.http.get<any>(this.url + '/order/' + storeId);
   }
 }
