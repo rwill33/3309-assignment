@@ -13,7 +13,6 @@ export class SearchProductsComponent implements OnInit {
   async ngOnInit() {
     if (this.service.products.length == 0) {
       this.service.products = await this.service.getAllProducts().toPromise();
-      this.service.addRatingToProducts();
     }
   }
 }

@@ -17,6 +17,8 @@ export class ViewProductsComponent implements OnInit {
   sortField: string = '';
   searchString = '';
   sortKey: any;
+  showMoreInfoOnProduct: boolean = false;
+  productReviews: any[] = [];
 
   constructor(private service: Service, private messageService: MessageService, private router: Router, private appComponent: AppComponent) { }
 
@@ -72,5 +74,10 @@ export class ViewProductsComponent implements OnInit {
       sum += this.service.cart[i].price;
     }
     return sum;
+  }
+
+  public async openProduct(product: any) {
+    this.productReviews = await this.service.getProductReview(product.productID).toPromise();
+    this.showMoreInfoOnProduct = true;
   }
 }

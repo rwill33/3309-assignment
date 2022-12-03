@@ -37,19 +37,19 @@ export class Service {
     return this.http.get<any>(this.url + '/products');
   }
 
-  public async addRatingToProducts() {
-    for (let i = 0; i < this.products.length; i++) {
-      const reviews = await this.getProductReview(this.products[i].productID).toPromise();
-      let averageRating = 0;
-      if (reviews.length > 0) {
-        for (let j = 0; j < reviews.length; j++) {
-          averageRating += reviews[j].rating;
-        }
-        averageRating = averageRating / reviews.length;
-      }
-      this.products[i]['rating'] = averageRating;
-    }
-  }
+  // public async addRatingToProducts() {
+  //   for (let i = 0; i < this.products.length; i++) {
+  //     const reviews = await this.getProductReview(this.products[i].productID).toPromise();
+  //     let averageRating = 0;
+  //     if (reviews.length > 0) {
+  //       for (let j = 0; j < reviews.length; j++) {
+  //         averageRating += reviews[j].rating;
+  //       }
+  //       averageRating = averageRating / reviews.length;
+  //     }
+  //     this.products[i]['rating'] = averageRating;
+  //   }
+  // }
 
   public getProductReview(productId: any): Observable<any> {
     return this.http.get<any>(this.url + '/productReview/' + productId);

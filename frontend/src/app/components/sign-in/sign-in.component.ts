@@ -48,7 +48,6 @@ export class SignInComponent implements OnInit {
   public async allFieldsCart(tempCart: any[]) {
     if (this.service.products.length == 0) {
       this.service.products = await this.service.getAllProducts().toPromise();
-      this.service.addRatingToProducts();
     }
     for (let i = 0; i < tempCart.length; i++) {
       loop1: for (let j = 0; this.service.products.length; j++) {

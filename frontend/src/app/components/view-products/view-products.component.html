@@ -1,5 +1,20 @@
 <p-toast></p-toast>
 
+<p-dialog [closable]="true" [(visible)]="showMoreInfoOnProduct" [modal]="true" [style]="{width: '80vw', height: '90vh'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" header="Reviews" [modal]="true"
+    styleClass="surface-section p-fluid" [contentStyle]="{'padding': '0px'}">
+    <ng-template pTemplate="content">
+        <div *ngFor="let review of productReviews;" class="grid">
+            <p-rating [(ngModel)]="review.rating" class="d-flex justify-content-center" [readonly]="true"
+                [cancel]="false"></p-rating>
+            <span class="p-float-label m-4">
+                <input [(ngModel)]="review.message" type="text" pInputText readonly="true">
+                <label>Comment</label>
+            </span>
+        </div>
+    </ng-template>
+</p-dialog>
+
 <div *ngIf="isCartView" class="d-flex justify-content-between align-items-center m-3">
     <h5>Total Items: {{products.length}}</h5>
     <h5>{{getTotalPrice() | currency}}</h5>
@@ -23,7 +38,7 @@
             </div>
         </ng-template>
         <ng-template let-product pTemplate="listItem">
-            <div class="col-12">
+            <div class="col-12" (click)="openProduct(product)">
                 <div class="product-list-item">
                     <div class="product-list-detail">
                         <div class="product-name">{{product.name}}</div>
@@ -51,7 +66,7 @@
             </div>
         </ng-template>
         <ng-template let-product pTemplate="gridItem">
-            <div class="col-12 md:col-4">
+            <div class="col-12 md:col-4" (click)="openProduct(product)">
                 <div class="product-grid-item card">
                     <div class="product-grid-item-top">
                         <div>
