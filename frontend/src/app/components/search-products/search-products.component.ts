@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng/api';
 import { Service } from 'src/app/services/service.service';
 
 @Component({
@@ -8,11 +7,12 @@ import { Service } from 'src/app/services/service.service';
   styleUrls: ['./search-products.component.css']
 })
 export class SearchProductsComponent implements OnInit {
-  products: any[] = [];
 
-  constructor(private service: Service) { }
+  constructor(public service: Service) { }
 
   async ngOnInit() {
-    this.products = await this.service.getAllProducts().toPromise();
+    if (this.service.products.length == 0) {
+      this.service.products = await this.service.getAllProducts().toPromise();
+    }
   }
 }

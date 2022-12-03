@@ -10,8 +10,9 @@ import { Service } from './services/service.service';
 export class AppComponent {
   title = 'frontend';
   public items: MenuItem[];
+  public showCart: boolean = false;
 
-  constructor(private service: Service) {
+  constructor(public service: Service)  {
     this.items = [
       {
         label: "Accounts",

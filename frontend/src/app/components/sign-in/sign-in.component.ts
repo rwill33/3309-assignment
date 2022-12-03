@@ -34,12 +34,28 @@ export class SignInComponent implements OnInit {
       if (this.checkValidUser()) {
         this.service.username = this.signInForm.controls.username.value!;
         this.service.loggedIn = true;
+        let tempCart = await this.service.getCartItems().toPromise();
+        await this.allFieldsCart(tempCart);
         this.router.navigate(['products']);
       } else {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid username or password.', life: 3000 });
       }
     } else {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Not all field are valid.', life: 3000 });
+    }
+  }
+
+  public async allFieldsCart(tempCart: any[]) {
+    if (this.service.products.length == 0) {
+      this.service.products = await this.service.getAllProducts().toPromise();
+    }
+    for (let i = 0; i < tempCart.length; i++) {
+      loop1: for (let j = 0; this.service.products.length; j++) {
+        if (this.service.products[j].productID == tempCart[i].productId) {
+          this.service.cart.push(this.service.products[j]);
+          break loop1;
+        }
+      }
     }
   }
 

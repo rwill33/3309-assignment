@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 export class Service {
   public loggedIn: boolean = false;
   public username: string = '';
+  public cart: any[] = [];
+  public products: any[] = [];
   private url: string = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
@@ -30,5 +32,17 @@ export class Service {
 
   public getAllProducts(): Observable<any> {
     return this.http.get<any>(this.url + '/products');
+  }
+
+  public getCartItems(): Observable<any> {
+    return this.http.get<any>(this.url + '/cart/' + this.username);
+  }
+
+  public addCartItem(cartItem: any): Observable<any> {
+    return this.http.put<any>(this.url + '/cart/' + this.username, cartItem);
+  }
+
+  public deleteCartItem(productId: number): Observable<any> {    
+    return this.http.delete<any>(this.url + '/cart/' + this.username + '?productId=' + productId,);
   }
 }

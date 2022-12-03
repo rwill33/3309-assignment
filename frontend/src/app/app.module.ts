@@ -31,10 +31,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
+import { ToastModule } from 'primeng/toast';
 
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { StoreCreateComponent } from './components/store-create/store-create.component';
@@ -47,7 +47,6 @@ import { ViewProductsComponent } from './components/view-products/view-products.
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     SignUpComponent,
     SignInComponent,
     StoreCreateComponent,
@@ -84,6 +83,7 @@ import { ViewProductsComponent } from './components/view-products/view-products.
     DropdownModule,
     DataViewModule,
     TagModule,
+    ToastModule,
     TabsModule.forRoot(),
   ],
   providers: [MessageService, ConfirmationService, AuthenticationService],

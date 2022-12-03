@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { Service } from 'src/app/services/service.service';
 
 @Component({
@@ -9,13 +9,14 @@ import { Service } from 'src/app/services/service.service';
 })
 export class ViewProductsComponent implements OnInit {
   @Input() products!: any[];
+  @Input() isCartView!: boolean;
   sortOptions: SelectItem[] = [];
   sortOrder: number = 1;
   sortField: string = '';
   searchString = '';
   sortKey: any;
 
-  constructor(private service: Service) { }
+  constructor(private service: Service, private messageService: MessageService) { }
 
   async ngOnInit() {
     this.sortOptions = [
@@ -37,4 +38,24 @@ export class ViewProductsComponent implements OnInit {
     }
   }
 
+  public async addToCart(product: any) {
+    await this.service.addCartItem({
+      username: this.service.username,
+      productId: product.productID,
+      quantity: 1
+    }).toPromise();
+    this.service.cart.push(product);
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: product.name + ' added to cart!', life: 3000 });
+  }
+
+  public async deleteFromCart(product: any) {
+    await this.service.deleteCartItem(product.productID).toPromise();
+    loop1: for (let i = 0; i < this.service.cart.length; i++) {
+      if (this.service.cart[i].productID == product.productID) {
+        this.service.cart = this.service.cart.splice(i, 1);
+        break loop1;
+      }
+    }
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: product.name + ' delted from cart!', life: 3000 });
+  }
 }
