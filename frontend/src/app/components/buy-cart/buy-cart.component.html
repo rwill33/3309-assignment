@@ -1,0 +1,41 @@
+<p-messages></p-messages>
+
+<h3 class="d-flex justify-content-center m-3">Buy</h3>
+<div class="d-flex justify-content-center">
+    <button pButton pRipple label="Buy" icon="pi pi-check" class="p-button-rounded p-button-success m-2" (click)="buy()"
+        [disabled]="service.cart.length == 0"></button>
+</div>
+<p-selectButton *ngIf="service.savedAddresses.length > 0" [(ngModel)]="addressType" (onChange)="changeButton()"
+    [options]="[{label: 'Existing Address', value: 'e'}, {label: 'New Address', value: 'n'}]" class="d-flex justify-content-center m-3">
+</p-selectButton>
+
+<div *ngIf="addressType == 'e'" class="m-3">
+    <p-dropdown (onChange)="buyForm.setValue($event.value)" [options]="service.savedAddresses" optionLabel="streetAddress1" class="d-flex justify-content-center"></p-dropdown>
+</div>
+
+<div [formGroup]="buyForm" class="p-fluid formgrid grid row d-flex">
+    <span class="p-float-label field col-sm-12 col-md-6 px-4 my-3">
+        <input type="text" formControlName="streetAddress1" pInputText required=true>
+        <label class="ps-4">Street Address 1</label>
+    </span>
+    <span class="p-float-label field col-sm-12 col-md-6 px-4 my-3">
+        <input type="text" formControlName="streetAddress2" pInputText required=false>
+        <label class="ps-4">Street Address 2 (Optional)</label>
+    </span>
+    <span class="p-float-label field col-sm-12 col-md-6 px-4 my-3">
+        <input type="text" formControlName="postalCode" pInputText required=true>
+        <label class="ps-4">Postal Code</label>
+    </span>
+    <span class="p-float-label field col-sm-12 col-md-6 px-4 my-3">
+        <input type="text" formControlName="city" pInputText required=true>
+        <label class="ps-4">City</label>
+    </span>
+    <span class="p-float-label field col-sm-12 col-md-6 px-4 my-3">
+        <input type="text" formControlName="province" pInputText required=false>
+        <label class="ps-4">Province (Optional)</label>
+    </span>
+    <span class="p-float-label field col-sm-12 col-md-6 px-4 my-3">
+        <input type="text" formControlName="country" pInputText required=true>
+        <label class="ps-4">Country</label>
+    </span>
+</div>

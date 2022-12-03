@@ -1,0 +1,89 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class Service {
+  public loggedIn: boolean = false;
+  public username: string = '';
+  public stores: any[] = [];
+  public cart: any[] = [];
+  public products: any[] = [];
+  public savedAddresses: any[] = [];
+  public customerOrders: any[] = [];
+  private url: string = 'http://localhost:3000/api';
+
+  constructor(private http: HttpClient) { }
+
+  public putUser(user: any): Observable<any> {
+    return this.http.put<any>(this.url + '/users', user);
+  }
+
+  public getUsers(): Observable<any> {
+    return this.http.get<any>(this.url + '/users');
+  }
+
+  public putStore(store: any): Observable<any> {
+    return this.http.put<any>(this.url + '/store', store);
+  }
+
+  public getUserStores(): Observable<any> {
+    return this.http.get<any>(this.url + '/stores/' + this.username);
+  }
+
+  public getAllProducts(): Observable<any> {
+    return this.http.get<any>(this.url + '/products');
+  }
+
+  public async addRatingToProducts() {
+    for (let i = 0; i < this.products.length; i++) {
+      const reviews = await this.getProductReview(this.products[i].productID).toPromise();
+      let averageRating = 0;
+      if (reviews.length > 0) {
+        for (let j = 0; j < reviews.length; j++) {
+          averageRating += reviews[j].rating;
+        }
+        averageRating = averageRating / reviews.length;
+      }
+      this.products[i]['rating'] = averageRating;
+    }
+  }
+
+  public getProductReview(productId: any): Observable<any> {
+    return this.http.get<any>(this.url + '/productReview/' + productId);
+  }
+
+  public getCartItems(): Observable<any> {
+    return this.http.get<any>(this.url + '/cart/' + this.username);
+  }
+
+  public addCartItem(cartItem: any): Observable<any> {
+    return this.http.put<any>(this.url + '/cart/' + this.username, cartItem);
+  }
+
+  public deleteCartItem(productId: number): Observable<any> {
+    return this.http.delete<any>(this.url + '/cart/' + this.username + '?productId=' + productId,);
+  }
+
+  public buyCart(): Observable<any> {
+    return this.http.put<any>(this.url + '/order', { username: this.username });
+  }
+
+  public getCustomerAddresses(): Observable<any> {
+    return this.http.get<any>(this.url + '/customerAddress/' + this.username);
+  }
+
+  public addCustomerAddresses(address: any): Observable<any> {
+    return this.http.put<any>(this.url + '/customerAddress', address);
+  }
+
+  public getCustomerOrders() {
+    return this.http.get<any>(this.url + '/order?username=' + this.username);
+  }
+
+  public getStoreOrders(storeId: number) {
+    return this.http.get<any>(this.url + '/order/' + storeId);
+  }
+}

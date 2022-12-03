@@ -110,7 +110,7 @@ router.route('/stores/:username')
 
 router.route('/products')
   .get((req, res) => {
-    connection.query(`SELECT * FROM Products`, (err, rows, fields) => {
+    connection.query(`SELECT * FROM Product`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {
@@ -188,7 +188,7 @@ router.route('/cart/:username')
     })
   })
   .delete((req, res) => {
-    connection.query(`DELETE FROM CartItem WHERE username='${req.params.username}' AND productId=${req.body.productId};`, (err, rows, fields) => {
+    connection.query(`DELETE FROM CartItem WHERE username='${req.params.username}' AND productId=${req.query.productId};`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {

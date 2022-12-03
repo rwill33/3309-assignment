@@ -1,0 +1,86 @@
+<p-toast></p-toast>
+
+<div *ngIf="isCartView" class="d-flex justify-content-between align-items-center m-3">
+    <h5>Total Items: {{products.length}}</h5>
+    <h5>{{getTotalPrice() | currency}}</h5>
+    <button (click)="buyCart()" pButton pRipple icon="pi pi-check" class="p-button-success ms-2" label="Buy"
+        [style]="{'width': '150px'}"></button>
+</div>
+
+<div class="card">
+    <p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField"
+        [sortOrder]="sortOrder" layout="grid">
+        <ng-template pTemplate="header">
+            <div class="d-flex justify-content-between">
+                <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price"
+                    (onChange)="onSortChange($event)" styleClass="mb-2 md:mb-0"></p-dropdown>
+                <span class="p-input-icon-left mb-2 md:mb-0">
+                    <i class="pi pi-search"></i>
+                    <input [(ngModel)]="searchString" type="search" pInputText placeholder="Search by Name"
+                        (input)="dv.filter(searchString)">
+                </span>
+                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+            </div>
+        </ng-template>
+        <ng-template let-product pTemplate="listItem">
+            <div class="col-12">
+                <div class="product-list-item">
+                    <div class="product-list-detail">
+                        <div class="product-name">{{product.name}}</div>
+                        <div class="product-description">{{product.brand}}</div>
+                        <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+                        <i class="pi pi-tag product-category-icon"></i><span
+                            class="product-category">{{product.category}}</span>
+                    </div>
+                    <div class="product-list-action">
+                        <span class="product-price">${{product.price}}</span>
+                        <p-button *ngIf="!isCartView" (onClick)="addToCart(product)" icon="pi pi-shopping-cart"
+                            [disabled]="product.quantity === 0" label="Add to cart">
+                        </p-button>
+                        <div class="d-flex justify-content-end">
+                            <button *ngIf="isCartView" (click)="deleteFromCart(product)" pButton pRipple
+                                icon="pi pi-trash" class="p-button-danger" [style]="{'width': '50px'}"></button>
+                        </div>
+                        <p-tag class="d-flex justify-content-end"
+                            severity="{{(product.quantity >= 200 ? 'success' : product.quantity >= 50 ? 'warning' : 'danger')}}">
+                            {{product.quantity >= 200 ? 'In Stock' : product.quantity >= 50 ? 'Low Stock' : 'Out Of
+                            Stock'}}
+                        </p-tag>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template let-product pTemplate="gridItem">
+            <div class="col-12 md:col-4">
+                <div class="product-grid-item card">
+                    <div class="product-grid-item-top">
+                        <div>
+                            <i class="pi pi-tag product-category-icon"></i>
+                            <span class="product-category">{{product.category}}</span>
+                        </div>
+                        <p-tag
+                            severity="{{(product.quantity >= 200 ? 'success' : product.quantity >= 50 ? 'warning' : 'danger')}}">
+                            {{product.quantity >= 200 ? 'In Stock' : product.quantity >= 50 ? 'Low Stock' : 'Out Of
+                            Stock'}}
+                        </p-tag>
+                    </div>
+                    <div class="product-grid-item-content">
+                        <div class="product-name">{{product.name}}</div>
+                        <div class="product-description">{{product.brand}}</div>
+                        <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+                    </div>
+                    <div class="product-grid-item-bottom">
+                        <span class="product-price">${{product.price}}</span>
+                        <div class="w-50 d-flex justify-content-end">
+                            <button *ngIf="isCartView" (click)="deleteFromCart(product)" pButton pRipple
+                                icon="pi pi-trash" class="p-button-danger mx-2" [style]="{'width': '50px'}"></button>
+                            <p-button *ngIf="!isCartView" (onClick)="addToCart(product)" icon="pi pi-shopping-cart"
+                                [disabled]="product.quantity === 0" class="mx-2" [style]="{'width': '50px'}">
+                            </p-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>

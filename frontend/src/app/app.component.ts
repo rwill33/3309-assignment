@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { Service } from './services/service.service';
 
 @Component({
   selector: 'app-root',
@@ -9,16 +10,54 @@ import { MenuItem } from 'primeng/api';
 export class AppComponent {
   title = 'frontend';
   public items: MenuItem[];
+  public showCart: boolean = false;
 
-  constructor() {
+  constructor(public service: Service)  {
     this.items = [
       {
-        label: "Item",
+        label: "Accounts",
+        icon: 'pi pi-user',
         items: [
           {
-            label: 'Item 2'
+            label: 'Log In',
+            routerLink: 'sign-in'
+          },
+          {
+            label: 'Sign Up',
+            routerLink: 'sign-up'
+          },
+          {
+            label: 'Sign Out',
+            command: () => {
+              this.service.loggedIn = false;
+            },
+            routerLink: 'sign-in'
           }
         ]
+      },
+      {
+        label: 'Products',
+        icon: 'pi pi-shopping-bag',
+        routerLink: 'products'
+      },
+      {
+        label: "Stores",
+        icon: 'pi pi-home',
+        items: [
+          {
+            label: "Create Store",
+            routerLink: 'store-create'
+          },
+          {
+            label: "Your Store(s)",
+            routerLink: 'user-stores'
+          },
+        ]
+      },
+      {
+        label: "Orders",
+        icon: 'pi pi-dollar',
+        routerLink: 'orders'
       }
     ];
   }
