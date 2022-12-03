@@ -2,7 +2,6 @@
     [draggable]="false" [resizable]="false" [maximizable]="true" header="Your Cart" [modal]="true"
     styleClass="surface-section p-fluid" [contentStyle]="{'padding': '0px'}" (onHide)="showCart = false">
     <ng-template pTemplate="content">
-        <h5>Total Items: {{service.cart.length}}</h5>
         <app-view-products [products]="service.cart" [isCartView]="true">
 
         </app-view-products>

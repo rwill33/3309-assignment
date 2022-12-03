@@ -10,6 +10,7 @@ export class Service {
   public username: string = '';
   public cart: any[] = [];
   public products: any[] = [];
+  public savedAddresses: any[] = [];
   private url: string = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
@@ -42,7 +43,19 @@ export class Service {
     return this.http.put<any>(this.url + '/cart/' + this.username, cartItem);
   }
 
-  public deleteCartItem(productId: number): Observable<any> {    
+  public deleteCartItem(productId: number): Observable<any> {
     return this.http.delete<any>(this.url + '/cart/' + this.username + '?productId=' + productId,);
+  }
+
+  public buyCart(): Observable<any> {
+    return this.http.put<any>(this.url + '/order', { username: this.username });
+  }
+
+  public getCustomerAddresses(): Observable<any> {
+    return this.http.get<any>(this.url + '/customerAddress/' + this.username);
+  }
+
+  public addCustomerAddresses(address: any): Observable<any> {
+    return this.http.put<any>(this.url + '/customerAddress', address);
   }
 }

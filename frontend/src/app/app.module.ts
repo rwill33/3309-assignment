@@ -32,6 +32,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AppComponent } from './app.component';
@@ -43,6 +44,7 @@ import { UserStoresComponent } from './components/user-stores/user-stores.compon
 import { ViewStoresComponent } from './components/view-stores/view-stores.component';
 import { SearchProductsComponent } from './components/search-products/search-products.component';
 import { ViewProductsComponent } from './components/view-products/view-products.component';
+import { BuyCartComponent } from './components/buy-cart/buy-cart.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { ViewProductsComponent } from './components/view-products/view-products.
     ViewStoresComponent,
     SearchProductsComponent,
     ViewProductsComponent,
+    BuyCartComponent,
   ],
   imports: [
     HttpClientModule,
@@ -84,6 +87,7 @@ import { ViewProductsComponent } from './components/view-products/view-products.
     DataViewModule,
     TagModule,
     ToastModule,
+    InputNumberModule,
     TabsModule.forRoot(),
   ],
   providers: [MessageService, ConfirmationService, AuthenticationService],

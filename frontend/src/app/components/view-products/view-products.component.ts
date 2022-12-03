@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MessageService, SelectItem } from 'primeng/api';
+import { AppComponent } from 'src/app/app.component';
 import { Service } from 'src/app/services/service.service';
 
 @Component({
@@ -16,7 +18,7 @@ export class ViewProductsComponent implements OnInit {
   searchString = '';
   sortKey: any;
 
-  constructor(private service: Service, private messageService: MessageService) { }
+  constructor(private service: Service, private messageService: MessageService, private router: Router, private appComponent: AppComponent) { }
 
   async ngOnInit() {
     this.sortOptions = [
@@ -57,5 +59,18 @@ export class ViewProductsComponent implements OnInit {
       }
     }
     this.messageService.add({ severity: 'success', summary: 'Success', detail: product.name + ' delted from cart!', life: 3000 });
+  }
+
+  public buyCart() {
+    this.appComponent.showCart = false;
+    this.router.navigate(['buy']);
+  }
+
+  public getTotalPrice() {
+    let sum: number = 0;
+    for (let i = 0; i < this.service.cart.length; i++) {
+      sum += this.service.cart[i].price;
+    }
+    return sum;
   }
 }

@@ -1,5 +1,12 @@
 <p-toast></p-toast>
 
+<div *ngIf="isCartView" class="d-flex justify-content-between align-items-center m-3">
+    <h5>Total Items: {{products.length}}</h5>
+    <h5>{{getTotalPrice() | currency}}</h5>
+    <button (click)="buyCart()" pButton pRipple icon="pi pi-check" class="p-button-success ms-2" label="Buy"
+        [style]="{'width': '150px'}"></button>
+</div>
+
 <div class="card">
     <p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField"
         [sortOrder]="sortOrder" layout="grid">
@@ -33,8 +40,6 @@
                         <div class="d-flex justify-content-end">
                             <button *ngIf="isCartView" (click)="deleteFromCart(product)" pButton pRipple
                                 icon="pi pi-trash" class="p-button-danger" [style]="{'width': '50px'}"></button>
-                            <button *ngIf="isCartView" pButton pRipple icon="pi pi-check" class="p-button-success ms-2"
-                                label="Buy" [style]="{'width': '150px'}"></button>
                         </div>
                         <p-tag class="d-flex justify-content-end"
                             severity="{{(product.quantity >= 200 ? 'success' : product.quantity >= 50 ? 'warning' : 'danger')}}">
@@ -69,8 +74,6 @@
                         <div class="w-50 d-flex justify-content-end">
                             <button *ngIf="isCartView" (click)="deleteFromCart(product)" pButton pRipple
                                 icon="pi pi-trash" class="p-button-danger mx-2" [style]="{'width': '50px'}"></button>
-                            <button *ngIf="isCartView" pButton pRipple icon="pi pi-check" class="p-button-success mx-2"
-                                label="Buy" [style]="{'width': '150px'}"></button>
                             <p-button *ngIf="!isCartView" (onClick)="addToCart(product)" icon="pi pi-shopping-cart"
                                 [disabled]="product.quantity === 0" class="mx-2" [style]="{'width': '50px'}">
                             </p-button>
