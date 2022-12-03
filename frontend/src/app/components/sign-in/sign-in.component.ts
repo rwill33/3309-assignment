@@ -34,7 +34,7 @@ export class SignInComponent implements OnInit {
       if (this.checkValidUser()) {
         this.service.username = this.signInForm.controls.username.value!;
         this.service.loggedIn = true;
-        this.router.navigate(['user-stores']);
+        this.router.navigate(['products']);
       } else {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid username or password.', life: 3000 });
       }

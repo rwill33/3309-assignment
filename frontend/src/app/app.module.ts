@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -27,9 +28,11 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { AccordionModule } from 'primeng/accordion';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
 
-import { AppRoutingModule } from './app-routing.module';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -38,6 +41,8 @@ import { StoreCreateComponent } from './components/store-create/store-create.com
 import { AuthenticationService } from './services/authentication.service';
 import { UserStoresComponent } from './components/user-stores/user-stores.component';
 import { ViewStoresComponent } from './components/view-stores/view-stores.component';
+import { SearchProductsComponent } from './components/search-products/search-products.component';
+import { ViewProductsComponent } from './components/view-products/view-products.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +53,8 @@ import { ViewStoresComponent } from './components/view-stores/view-stores.compon
     StoreCreateComponent,
     UserStoresComponent,
     ViewStoresComponent,
+    SearchProductsComponent,
+    ViewProductsComponent,
   ],
   imports: [
     HttpClientModule,
@@ -74,9 +81,12 @@ import { ViewStoresComponent } from './components/view-stores/view-stores.compon
     AccordionModule,
     InputTextareaModule,
     ConfirmDialogModule,
+    DropdownModule,
+    DataViewModule,
+    TagModule,
     TabsModule.forRoot(),
   ],
-  providers: [MessageService, ConfirmationService, AuthenticationService ],
+  providers: [MessageService, ConfirmationService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

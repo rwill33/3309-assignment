@@ -27,4 +27,8 @@ export class Service {
   public getUserStores(): Observable<any> {
     return this.http.get<any>(this.url + '/stores/' + this.username);
   }
+
+  public getAllProducts(): Observable<any> {
+    return this.http.get<any>(this.url + '/products');
+  }
 }

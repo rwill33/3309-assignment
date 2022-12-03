@@ -35,6 +35,11 @@ export class AppComponent {
         ]
       },
       {
+        label: 'Products',
+        icon: 'pi pi-shopping-bag',
+        routerLink: 'products'
+      },
+      {
         label: "Stores",
         icon: 'pi pi-home',
         items: [
@@ -47,7 +52,7 @@ export class AppComponent {
             routerLink: 'user-stores'
           },
         ]
-      }
+      },
     ];
   }
 }
