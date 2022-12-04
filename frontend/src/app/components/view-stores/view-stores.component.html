@@ -1,3 +1,75 @@
+
+
+<span class="p-float-label field col-sm-12 col-md-6 px-4 my-3">
+    <input type="text" [(ngModel)]="storeName" pInputText required=true>
+    <label class="ps-4">Store Name</label>  <button pButton pRipple label="searchStores" icon="pi pi-check" class="p-button-rounded"></button>
+</span>
+
+<div class="d-flex justify-content-center">
+   
+</div>
+
+<div name = "template" *ngFor="let store of stores " >
+    <div class = "border" (click) ="getStoreDetails(store.storeId)">
+      
+         
+    
+        <br>
+        <h4>Store Name: {{store.storeName}}</h4>
+        <br>
+        <h6>Store ID: {{store.storeId}}</h6>
+        <br>
+    </div>      
+
+</div>
+
+<p-dialog [closable]="true" [(visible)]="showMoreInfoOnStore" [modal]="true" [style]="{width: '80vw', height: '90vh'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" header="Store Info" [modal]="true"
+    styleClass="surface-section p-fluid" [contentStyle]="{'padding': '0px'}">
+    <ng-template pTemplate="content">
+
+        <h3>Top Store Items:</h3>
+            <div name = "best"  ></div>
+            <ul *ngFor="let item of items ">
+                <li>{{item.name}}</li>
+            </ul>
+
+            <h3>Top Annual Store Sales:</h3>
+            <div *ngFor="let income of incomes ">
+               <h5> {{income.store_total}}</h5>
+            </div>
+      <!--  <div *ngFor="let review of productReviews;" class="grid">
+            <p-rating [(ngModel)]="review.rating" class="d-flex justify-content-center" [readonly]="true"
+                [cancel]="false"></p-rating>
+            <span class="p-float-label m-4">
+                <input [(ngModel)]="review.message" type="text" pInputText readonly="true">
+                <label>Comment</label>
+            </span>
+        </div> -->
+    </ng-template>
+</p-dialog>
+
+<!--
+<ng-template let-store pTemplate="listItem">
+    <div class="col-12" >
+        <div class="store-list">
+            <div class="store-list">
+                <div class="store-name">{{store.storeName}}</div>
+                    <div class="store-Id">{{store.storeId}}</div>
+                </div>
+            <div class="store-list-action">
+               
+                <div class="d-flex justify-content-end">
+    
+                </div>
+        
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+-->
+
 <p-table [value]="objects" [rows]="10" [paginator]="true" [rowHover]="true" [filterDelay]="0">
     <ng-template pTemplate="header">
         <tr>
@@ -14,3 +86,4 @@
         </tr>
     </ng-template>
 </p-table>
+
