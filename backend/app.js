@@ -138,6 +138,24 @@ router.route('/store/:storeId')
       }
     })
   })
+  .post((req, res) => {
+    let changes = Object.keys(req.body);
+    let changesString;
+    changes.forEach((change, index) => {
+      if(index === 0) {
+        changesString = `${change}='${req.body[change]}'`
+      } else {
+        changesString = changesString + `, ${change}='${req.body[change]}'`
+      }
+    })
+    connection.query(`UPDATE Store SET ${changesString} WHERE storeId=${req.params.storeId};`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  })
 
 router.route('/productReview/:productId')
   .get((req, res) => {

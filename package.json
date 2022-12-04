@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run start --workspace=backend\" \"npm run start --workspace=frontend\"",
+    "start": "concurrently \"npm run dev --workspace=backend\" \"npm run start --workspace=frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "workspaces": [
