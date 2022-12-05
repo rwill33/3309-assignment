@@ -111,6 +111,9 @@ export class Service {
   public getAllStores(){
     return this.http.get<any>(this.url + '/findAllStores');
   }
+  public putReview(id:number,textRating:string,numberRating:number){
+    return this.http.put<any>(this.url + '/addReview',{username:this.username,id,textRating,numberRating});
+  }
 
 
 }
