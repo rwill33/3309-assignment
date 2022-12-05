@@ -36,19 +36,6 @@ export class Service {
   public getAllProducts(): Observable<any> {
     return this.http.get<any>(this.url + '/products');
   }
-  public findBestSellar(storeId: number) : Observable<any>{
-    return this.http.get<any>(this.url + '/bestSellar/' + storeId)
-  }
-  public findStoreId(storeName:string): Observable<any>{
-    return this.http.get<any>(this.url + '/findStoreId/' + storeName)
-  }
-  public getAnnualStore(id:number): Observable<any>{
-    return this.http.get<any>(this.url + '/findStoreAnnual/' + id)
-  }
-  public findStoreNames(storeName:string): Observable<any>{
-    return this.http.get<any>(this.url + '/findStoreNames/' + storeName)
-  }
-  
 
   // public async addRatingToProducts() {
   //   for (let i = 0; i < this.products.length; i++) {
@@ -99,10 +86,4 @@ export class Service {
   public getStoreOrders(storeId: number) {
     return this.http.get<any>(this.url + '/order/' + storeId);
   }
-
-  public getAllStores(){
-    return this.http.get<any>(this.url + '/findAllStores');
-  }
-
-
 }

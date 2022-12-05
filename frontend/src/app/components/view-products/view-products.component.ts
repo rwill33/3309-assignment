@@ -25,8 +25,7 @@ export class ViewProductsComponent implements OnInit {
   async ngOnInit() {
     this.sortOptions = [
       { label: 'Price High to Low', value: '!price' },
-      { label: 'Price Low to High', value: 'price' },
-      {label: 'sort alphabetically', value: 'alpha'}
+      { label: 'Price Low to High', value: 'price' }
     ];
   }
 
@@ -36,12 +35,7 @@ export class ViewProductsComponent implements OnInit {
     if (value.indexOf('!') === 0) {
       this.sortOrder = -1;
       this.sortField = value.substring(1, value.length);
-    }else if(value === 'alpha'){
-     
-
-
     }
-
     else {
       this.sortOrder = 1;
       this.sortField = value;

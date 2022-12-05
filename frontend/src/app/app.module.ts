@@ -46,8 +46,6 @@ import { SearchProductsComponent } from './components/search-products/search-pro
 import { ViewProductsComponent } from './components/view-products/view-products.component';
 import { BuyCartComponent } from './components/buy-cart/buy-cart.component';
 import { OrdersComponent } from './components/orders/orders.component';
-import { BestSellerComponent } from './components/best-seller/best-seller.component';
-//import{PopupModule} from 'ng2-opd-popup';
 
 @NgModule({
   declarations: [
@@ -61,7 +59,6 @@ import { BestSellerComponent } from './components/best-seller/best-seller.compon
     ViewProductsComponent,
     BuyCartComponent,
     OrdersComponent,
-    BestSellerComponent,
   ],
   imports: [
     HttpClientModule,
@@ -94,8 +91,6 @@ import { BestSellerComponent } from './components/best-seller/best-seller.compon
     ToastModule,
     InputNumberModule,
     TabsModule.forRoot(),
-    
-    
   ],
   providers: [MessageService, ConfirmationService, AuthenticationService],
   bootstrap: [AppComponent]
