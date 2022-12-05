@@ -45,6 +45,10 @@ export class Service {
   public getAnnualStore(id:number): Observable<any>{
     return this.http.get<any>(this.url + '/findStoreAnnual/' + id)
   }
+  public findStoreNames(storeName:string): Observable<any>{
+    return this.http.get<any>(this.url + '/findStoreNames/' + storeName)
+  }
+  
 
   // public async addRatingToProducts() {
   //   for (let i = 0; i < this.products.length; i++) {

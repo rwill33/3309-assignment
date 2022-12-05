@@ -59,6 +59,27 @@ this.stores = response;
       
 
   }
+  searchStore(){
+this.service.findStoreNames(this.storeName).subscribe(
+  (response: any) => {
+this.stores=response;
+
+
+  },
+  (error) => {
+ 
+  });
+
+
+
+
+
+
+
+
+
+
+  }
 
  
 

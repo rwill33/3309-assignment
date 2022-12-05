@@ -306,6 +306,17 @@ router.route('/order/:storeId')
     })
   })
 
+  router.route('/findStoreNames/:storeName')
+  .get((req,res) => {
+    connection.query(`SELECT storeName,storeId FROM store WHERE storeName LIKE '%${req.params.storeName}%'  `, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  })
+
 
 router.route('/')
 
