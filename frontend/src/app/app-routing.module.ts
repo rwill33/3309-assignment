@@ -9,7 +9,7 @@ import { StoreCreateComponent } from './components/store-create/store-create.com
 import { UserStoresComponent } from './components/user-stores/user-stores.component';
 import { AuthenticationService } from './services/authentication.service';
 import { ViewStoresComponent } from './components/view-stores/view-stores.component';
-
+import { SearchStoresComponent } from './components/search-stores/search-stores.component';
 const routes: Routes = [
   {
     path: '', redirectTo: 'sign-in',  pathMatch: 'full'
@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'store-create', component: StoreCreateComponent, canActivate: [AuthenticationService] },
   { path: 'sign-up', component: SignUpComponent },
   {path: 'view-store',component: ViewStoresComponent, canActivate: [AuthenticationService]},
+  {path: 'search-stores',component: SearchStoresComponent, canActivate: [AuthenticationService]},
   { path: '**', component: SignInComponent },
 
 ];
