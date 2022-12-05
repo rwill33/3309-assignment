@@ -26,49 +26,61 @@
         <p-tabPanel header="Summary">
           <h5>Description: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText> 
+            <input id="float-input" type="text" pInputText [disabled]=disableEdit> 
             <label for="float-input">{{this.store?.description}}</label>
           </span>
           <h5>Street Address 1: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText> 
+            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
             <label for="float-input">{{this.store?.streetAddress1}}</label>
           </span>
           <h5>Street Address 2: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText> 
+            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
             <label for="float-input">{{this.store?.streetAddress2}}</label>
           </span>
           <h5>Postal Code: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText> 
+            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
             <label for="float-input">{{this.store?.postalCode}}</label>
           </span>
           <h5>Country:</h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText> 
+            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
             <label for="float-input">{{this.store?.country}}</label>
           </span>
           <h5>Province: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText> 
+            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
             <label for="float-input">{{this.store?.province}}</label>
           </span>
           <h5>City: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText> 
+            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
             <label for="float-input">{{this.store?.city}}</label>
           </span>
-          <!-- <button class="p-button mx-2" style="justify-content: center;" (click)="openProduct(product)">Edit</button> -->
+          <button class="p-button" style="justify-content: center;" (click)="editSummary()">{{this.btnName}}</button>
         </p-tabPanel>
         <p-tabPanel header="Orders">
-            Content 2
+          <ul>
+            <li *ngFor="let order of orders">
+              {{order?.orderNo}}
+            </li>
+          </ul>
         </p-tabPanel>
         <p-tabPanel header="Products">
             Content 3
         </p-tabPanel>
         <p-tabPanel header="Analytics">
-          Content 3
+          <h5>Best Sellers:</h5>
+        <ul>
+          <li *ngFor="let product of bestSellers">
+            {{product?.name}}
+          </li>
+        </ul>
+        <h5>Total Sales: ${{totalSales?.total ? totalSales?.total : 0}}</h5>
+        <h5>Number of Orders: {{totalSales?.numOfOrders ? totalSales?.numOfOrders : 0}}</h5>
+        <h5>Number of Products Sold: {{totalSales?.numOfProductsSold ? totalSales?.numOfProductsSold : 0}}</h5> -->
       </p-tabPanel>
     </p-tabView>
       <!-- <div style="padding: 20px;">
