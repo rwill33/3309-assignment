@@ -33,7 +33,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { InputNumberModule } from 'primeng/inputnumber';
-
+import {TabViewModule} from 'primeng/tabview'
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AppComponent } from './app.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -93,9 +93,8 @@ import { BestSellerComponent } from './components/best-seller/best-seller.compon
     TagModule,
     ToastModule,
     InputNumberModule,
+    TabViewModule,
     TabsModule.forRoot(),
-    
-    
   ],
   providers: [MessageService, ConfirmationService, AuthenticationService],
   bootstrap: [AppComponent]
