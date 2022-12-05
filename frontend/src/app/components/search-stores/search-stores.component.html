@@ -31,7 +31,7 @@
                 <div id="listProducts" Layout = 'grid' >
                      {{item.name}}
                      ${{item.price}} 
-                     <button pButton pRipple label="Add to cart" icon="pi pi-check" class="p-button-rounded"></button>
+                     <button pButton pRipple label="Add to cart" icon="pi pi-check" class="p-button-rounded" (click)="addToCart(item.productID)"></button>
                     </div>
                 <div></div>
                 </li>

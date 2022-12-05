@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Service } from 'src/app/services/service.service';
 import { HttpClient } from '@angular/common/http';
+import { MessageService, SelectItem } from 'primeng/api';
 @Component({
   selector: 'app-search-stores',
   templateUrl: './search-stores.component.html',
@@ -15,7 +16,7 @@ showMoreInfoOnStore:boolean = false;
 
   constructor(
     private service: Service,
-
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -59,5 +60,19 @@ showMoreInfoOnStore:boolean = false;
     
       });
   }
+
+async  addToCart(id:number){
+
+ await this.service.addCartItem({
+        username: this.service.username,
+        productId: id,
+        quantity: 1
+      }).toPromise();
+      this.service.cart = await this.service.getCartItems().toPromise();
+    //  this.messageService.add({ severity: 'success', summary: 'Success', detail: product.name + ' added to cart!', life: 3000 });
+
+
+  
+    }
 
 }
