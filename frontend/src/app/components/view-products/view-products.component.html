@@ -38,9 +38,9 @@
             </div>
         </ng-template>
         <ng-template let-product pTemplate="listItem">
-            <div class="col-12" (click)="openProduct(product)">
+            <div class="col-12">
                 <div class="product-list-item">
-                    <div class="product-list-detail">
+                    <div class="product-list-detail" (click)="openProduct(product)">
                         <div class="product-name">{{product.name}}</div>
                         <div class="product-description">{{product.brand}}</div>
                         <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
@@ -57,16 +57,15 @@
                                 icon="pi pi-trash" class="p-button-danger" [style]="{'width': '50px'}"></button>
                         </div>
                         <p-tag class="d-flex justify-content-end"
-                            severity="{{(product.quantity >= 200 ? 'success' : product.quantity >= 50 ? 'warning' : 'danger')}}">
-                            {{product.quantity >= 200 ? 'In Stock' : product.quantity >= 50 ? 'Low Stock' : 'Out Of
-                            Stock'}}
+                            severity="{{(product.quantity >= 50 ? 'success' : product.quantity > 0 ? 'warning' : 'danger')}}">
+                            {{product.quantity >= 50 ? 'In Stock' : product.quantity > 0 ? 'Low Stock' : 'Out Of Stock'}}
                         </p-tag>
                     </div>
                 </div>
             </div>
         </ng-template>
         <ng-template let-product pTemplate="gridItem">
-            <div class="col-12 md:col-4" (click)="openProduct(product)">
+            <div class="col-12 md:col-4">
                 <div class="product-grid-item card">
                     <div class="product-grid-item-top">
                         <div>
@@ -74,15 +73,19 @@
                             <span class="product-category">{{product.category}}</span>
                         </div>
                         <p-tag
-                            severity="{{(product.quantity >= 200 ? 'success' : product.quantity >= 50 ? 'warning' : 'danger')}}">
-                            {{product.quantity >= 200 ? 'In Stock' : product.quantity >= 50 ? 'Low Stock' : 'Out Of
-                            Stock'}}
+                        severity="{{(product.quantity >= 50 ? 'success' : product.quantity > 0 ? 'warning' : 'danger')}}">
+                        {{product.quantity >= 50 ? 'In Stock' : product.quantity > 0 ? 'Low Stock' : 'Out Of Stock'}}
                         </p-tag>
                     </div>
                     <div class="product-grid-item-content">
                         <div class="product-name">{{product.name}}</div>
                         <div class="product-description">{{product.brand}}</div>
-                        <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+                        <div style="display: flex; justify-content: center;">
+                          <div style="width: 200px;">
+                            <div *ngIf="isCartView">Quantity: {{product.quantity}}</div>
+                            <button *ngIf="!isCartView" class="p-button mx-2" style="justify-content: center;" (click)="openProduct(product)">View Reviews</button>
+                          </div>
+                        </div>
                     </div>
                     <div class="product-grid-item-bottom">
                         <span class="product-price">${{product.price}}</span>

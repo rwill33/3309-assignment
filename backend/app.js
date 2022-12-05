@@ -179,7 +179,7 @@ router.route('/productReview/:productId')
 
 router.route('/cart/:username')
   .get((req, res) => {
-    connection.query(`SELECT productId, quantity FROM CartItem WHERE username='${req.params.username}';`, (err, rows, fields) => {
+    connection.query(`SELECT c.productId as productId, c.quantity as quantity, p.name, p.price, p.brand, p.category FROM CartItem c JOIN Product p ON c.productId=p.productId WHERE username='${req.params.username}';`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {
@@ -188,7 +188,7 @@ router.route('/cart/:username')
     })
   })
   .put((req, res) => {
-    connection.query(`INSERT INTO CartItem (username, productId, quantity) VALUES ('${req.params.username}', ${req.body.productId}, ${req.body.quantity});`, (err, rows, fields) => {
+    connection.query(`INSERT INTO CartItem (username, productId, quantity) SELECT '${req.params.username}', ${req.body.productId}, ${req.body.quantity} WHERE EXISTS(SELECT * FROM Product WHERE productId='${req.body.productId}' AND quantity >=${req.body.quantity}) ON DUPLICATE KEY UPDATE quantity=(SELECT (quantity+1) FROM CartItem WHERE username='${req.params.username}' AND productId=${req.body.productId});`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {
