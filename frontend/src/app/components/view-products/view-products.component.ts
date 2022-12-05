@@ -20,7 +20,7 @@ export class ViewProductsComponent implements OnInit {
   showMoreInfoOnProduct: boolean = false;
   productReviews: any[] = [];
   textReview: string = "";
-  numberRating:number = 0;
+  numberRating:number =0;
   showInfoproduct:any;
 
   constructor(private service: Service, private messageService: MessageService, private router: Router, private appComponent: AppComponent) { }
@@ -96,11 +96,24 @@ export class ViewProductsComponent implements OnInit {
 
 AddReview(){
   console.log()
+if(this.numberRating>5){
+  this.numberRating = 5;
+  console.log(this.numberRating)
+}
 
   
   this.service.putReview(this.showInfoproduct.productID,this.textReview,this.numberRating).subscribe(
     (response: any) => {
+      this.textReview = "";
+      this.numberRating= 0;
+      this.service.getProductReview(this.showInfoproduct.productID).subscribe(
+        (response:any) =>{
+
+          this.showMoreInfoOnProduct = false;
+        },
+        (error) => {
       
+        });
       
       
         },
