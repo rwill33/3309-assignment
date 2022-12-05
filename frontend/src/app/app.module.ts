@@ -47,6 +47,7 @@ import { ViewProductsComponent } from './components/view-products/view-products.
 import { BuyCartComponent } from './components/buy-cart/buy-cart.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { BestSellerComponent } from './components/best-seller/best-seller.component';
+import { SearchStoresComponent } from './components/search-stores/search-stores.component';
 //import{PopupModule} from 'ng2-opd-popup';
 
 @NgModule({
@@ -62,6 +63,7 @@ import { BestSellerComponent } from './components/best-seller/best-seller.compon
     BuyCartComponent,
     OrdersComponent,
     BestSellerComponent,
+    SearchStoresComponent,
   ],
   imports: [
     HttpClientModule,

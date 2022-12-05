@@ -345,6 +345,24 @@ router.route('/order/:storeId')
     })
   })
 
+  router.route('/addReview')
+  .put((req,res) => {
+
+console.log(req.body.username)
+console.log(req.body.id)
+console.log(req.body.textRating)
+console.log(req.body.numberRating)
+
+    connection.query(`INSERT INTO review (username,productId,message,rating) VALUES ('${req.body.username}','${req.body.id}','${req.body.textRating}','${req.body.numberRating}')`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  })
+
+
 
 router.route('/')
 

@@ -54,7 +54,7 @@ export class AppComponent {
           },
           {
             label: "search stores",
-            routerLink: 'view-store'
+            routerLink: 'search-stores'
           }
         ]
       },
