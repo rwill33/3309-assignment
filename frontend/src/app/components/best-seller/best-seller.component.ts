@@ -24,21 +24,21 @@ this.service.findStoreId(this.storeName).subscribe(
   (response: any) => {
  this.obj = response;
  console.log(this.obj.storeId);
-this.service.findBestSellar(this.obj.storeId).subscribe(
+this.service.findBestSeller(this.obj.storeId).subscribe(
   (response: any) => {
 
 
-    
+
   },
   (error) => {
- 
+
   });
 
     },
     (error) => {
- 
+
     });
-  
+
 
 
 
