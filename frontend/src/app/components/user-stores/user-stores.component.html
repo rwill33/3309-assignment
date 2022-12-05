@@ -1,12 +1,58 @@
 <h3 class="d-flex justify-content-center m-3">Your Store(s)</h3>
 
-<app-view-stores [objects]="service.stores"
-    [fields]="['storeName', 'storeId', 'city', 'country', 'description', 'postalCode', 'province', 'streetAddress1', 'streetAddress2']">
-</app-view-stores>
 
-<h3 class="d-flex justify-content-center m-3">Your Store(s) Orders</h3>
+<p-table [value]="service.stores" [rows]="10" [paginator]="true" [rowHover]="true" [filterDelay]="0">
+  <ng-template pTemplate="header">
+      <tr>
+          <th *ngFor="let field of fields" style="text-align: center">
+              {{field}}
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-store>
+      <tr (click)="viewStoreDetails(store.storeId)">
+          <td *ngFor="let field of fields">
+              <div style="text-align: center; width: 100%">{{store[field]}}</div>
+          </td>
+      </tr>
+  </ng-template>
+</p-table>
 
-<div *ngFor="let store of service.stores; let i = index">
-    <h5 class="d-flex justify-content-center m-3">{{store.storeId}}</h5>
-    <app-view-stores [objects]="storeOrders[i]" [fields]="['datePlaced', 'amount']"></app-view-stores>
-</div>
+<p-dialog [closable]="true" [(visible)]="showMoreInfoOnStore" [modal]="true" [style]="{width: '80vw', height: '90vh'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" header={{this.store?.storeName}} [modal]="true"
+    styleClass="surface-section p-fluid" [contentStyle]="{'padding': '0px'}">
+    <ng-template pTemplate="content">
+      <div style="padding: 20px;">
+        <h3>Store Summary</h3>
+        <h5>Description: {{this.store?.description}}</h5>
+        <h5>Street Address 1: {{this.store?.streetAddress1}}</h5>
+        <h5>Street Address 2: {{this.store?.streetAddress2}}</h5>
+        <h5>Postal Code: {{this.store?.postalCode}}</h5>
+        <h5>Country: {{this.store?.country}}</h5>
+        <h5>Province: {{this.store?.province}}</h5>
+        <h5>City: {{this.store?.city}}</h5>
+        <h3>Products</h3>
+        <ul>
+          <li *ngFor="let product of storeProducts">
+            {{product?.name}}
+          </li>
+        </ul>
+        <h3>Orders</h3>
+          <ul>
+            <li *ngFor="let order of orders">
+              {{order?.orderNo}}
+            </li>
+          </ul>
+        <h3>Analytics</h3>
+        <h5>Best Sellers:</h5>
+        <ul>
+          <li *ngFor="let product of bestSellers">
+            {{product?.name}}
+          </li>
+        </ul>
+        <h5>Total Sales: ${{totalSales?.total ? totalSales?.total : 0}}</h5>
+        <h5>Number of Orders: {{totalSales?.numOfOrders ? totalSales?.numOfOrders : 0}}</h5>
+        <h5>Number of Products Sold: {{totalSales?.numOfProductsSold ? totalSales?.numOfProductsSold : 0}}</h5>
+      </div>
+    </ng-template>
+</p-dialog>
