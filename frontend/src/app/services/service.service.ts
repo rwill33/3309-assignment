@@ -57,6 +57,13 @@ export class Service {
     return this.http.get<any>(this.url + '/findStoreNames/' + storeName)
   }
 
+  public getOrderDetailsById(id: number): Observable<any> {
+    return this.http.get<any>(this.url + '/order/details/' + id);
+  }
+
+  public getOrderProductsById(id: number): Observable<any> {
+    return this.http.get<any>(this.url + '/order/products/' + id);
+  }
 
   // public async addRatingToProducts() {
   //   for (let i = 0; i < this.products.length; i++) {
