@@ -54,19 +54,14 @@ export class ViewProductsComponent implements OnInit {
       productId: product.productID,
       quantity: 1
     }).toPromise();
-    this.service.cart.push(product);
+    this.service.cart = await this.service.getCartItems().toPromise();
     this.messageService.add({ severity: 'success', summary: 'Success', detail: product.name + ' added to cart!', life: 3000 });
   }
 
   public async deleteFromCart(product: any) {
-    await this.service.deleteCartItem(product.productID).toPromise();
-    loop1: for (let i = 0; i < this.service.cart.length; i++) {
-      if (this.service.cart[i].productID == product.productID) {
-        this.service.cart = this.service.cart.splice(i, 1);
-        break loop1;
-      }
-    }
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: product.name + ' delted from cart!', life: 3000 });
+    await this.service.deleteCartItem(product.productId).toPromise();
+    this.service.cart = await this.service.getCartItems().toPromise();
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: product.name + ' deleted from cart!', life: 3000 });
   }
 
   public buyCart() {
@@ -75,11 +70,19 @@ export class ViewProductsComponent implements OnInit {
   }
 
   public getTotalPrice() {
-    let sum: number = 0;
-    for (let i = 0; i < this.service.cart.length; i++) {
-      sum += this.service.cart[i].price;
-    }
-    return sum;
+    let total: number = 0;
+    this.service.cart.forEach((item) => {
+      total += item.quantity * item.price;
+    })
+    return total;
+  }
+
+  public getQuantityTotal() {
+    let total: number = 0;
+    this.service.cart.forEach((item) => {
+      total += item.quantity;
+    })
+    return total;
   }
 
   public async openProduct(product: any) {

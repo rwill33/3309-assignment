@@ -111,7 +111,7 @@ router.route('/stores/:username')
 
 router.route('/products')
   .get((req, res) => {
-    connection.query(`SELECT * FROM Product`, (err, rows, fields) => {
+    connection.query(`SELECT p.*, AVG(r.rating) as avgRating FROM Product p LEFT JOIN Review r ON p.ProductID=r.productId GROUP BY p.productID;`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {
@@ -132,6 +132,24 @@ router.route('/store/:storeId')
   })
   .put((req, res) => {
     connection.query(`INSERT INTO Product(name, price, brand, quantity, category, storeId) VALUES ('${req.body.name}', ${req.body.price}, '${req.body.brand}', ${req.body.quantity}, '${req.body.category}', ${req.params.storeId});`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  })
+  .post((req, res) => {
+    let changes = Object.keys(req.body);
+    let changesString;
+    changes.forEach((change, index) => {
+      if(index === 0) {
+        changesString = `${change}='${req.body[change]}'`
+      } else {
+        changesString = changesString + `, ${change}='${req.body[change]}'`
+      }
+    })
+    connection.query(`UPDATE Store SET ${changesString} WHERE storeId=${req.params.storeId};`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {
@@ -162,7 +180,7 @@ router.route('/productReview/:productId')
 
 router.route('/cart/:username')
   .get((req, res) => {
-    connection.query(`SELECT productId, quantity FROM CartItem WHERE username='${req.params.username}';`, (err, rows, fields) => {
+    connection.query(`SELECT c.productId as productId, c.quantity as quantity, p.name, p.price, p.brand, p.category FROM CartItem c JOIN Product p ON c.productId=p.productId WHERE username='${req.params.username}';`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {
@@ -171,16 +189,7 @@ router.route('/cart/:username')
     })
   })
   .put((req, res) => {
-    connection.query(`INSERT INTO CartItem (username, productId, quantity) VALUES ('${req.params.username}', ${req.body.productId}, ${req.body.quantity});`, (err, rows, fields) => {
-      if (err) {
-        res.status(500).send(err)
-      } else {
-        res.send(rows);
-      }
-    })
-  })
-  .post((req, res) => {
-    connection.query(`UPDATE CartItem SET quantity=${req.body.quantity} WHERE username='${req.params.username}' AND productId=${req.body.productId};`, (err, rows, fields) => {
+    connection.query(`INSERT INTO CartItem (username, productId, quantity) SELECT '${req.params.username}', ${req.body.productId}, ${req.body.quantity} WHERE EXISTS(SELECT * FROM Product WHERE productId='${req.body.productId}' AND quantity >=${req.body.quantity}) ON DUPLICATE KEY UPDATE quantity=(SELECT (quantity+1) FROM CartItem WHERE username='${req.params.username}' AND productId=${req.body.productId});`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {
@@ -189,14 +198,20 @@ router.route('/cart/:username')
     })
   })
   .delete((req, res) => {
-    connection.query(`DELETE FROM CartItem WHERE username='${req.params.username}' AND productId=${req.query.productId};`, (err, rows, fields) => {
+    connection.query(`UPDATE CartItem as c, (SELECT (quantity-1) as quantity FROM CartItem WHERE username='${req.params.username}' AND productId=${req.query.productId}) as q SET c.quantity = q.quantity WHERE username='${req.params.username}' AND productId=${req.query.productId};`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {
-        res.send(rows);
+        connection.query(`DELETE FROM CartItem WHERE username='${req.params.username}' AND productId=${req.query.productId} AND quantity=0;`, (err, rows, fields) => {
+          if (err) {
+            res.status(500).send(err)
+          } else {
+            res.send(rows);
+          }
+        })
       }
     })
-  })
+  });
 
 router.route('/order')
   .get((req,res) => {

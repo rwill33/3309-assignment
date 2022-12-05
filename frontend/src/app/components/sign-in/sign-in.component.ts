@@ -46,17 +46,18 @@ export class SignInComponent implements OnInit {
   }
 
   public async allFieldsCart(tempCart: any[]) {
-    if (this.service.products.length == 0) {
-      this.service.products = await this.service.getAllProducts().toPromise();
-    }
-    for (let i = 0; i < tempCart.length; i++) {
-      loop1: for (let j = 0; this.service.products.length; j++) {
-        if (this.service.products[j].productID == tempCart[i].productId) {
-          this.service.cart.push(this.service.products[j]);
-          break loop1;
-        }
-      }
-    }
+    // if (this.service.products.length == 0) {
+    //   this.service.products = await this.service.getAllProducts().toPromise();
+    // }
+    // for (let i = 0; i < tempCart.length; i++) {
+    //   loop1: for (let j = 0; this.service.products.length; j++) {
+    //     if (this.service.products[j].productID == tempCart[i].productId) {
+    //       this.service.cart.push(this.service.products[j]);
+    //       break loop1;
+    //     }
+    //   }
+    // }
+    this.service.cart = await this.service.getCartItems().toPromise();
   }
 
   public checkValidUser(): boolean {
