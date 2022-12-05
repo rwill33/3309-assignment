@@ -1,2 +1,72 @@
 <h3 class="d-flex justify-content-center m-3">Orders</h3>
- <app-view-stores [objects]="service.customerOrders" [fields]="['datePlaced', 'amount']"></app-view-stores>
+
+<p-table [value]="service.customerOrders" [rows]="10" [paginator]="true" [rowHover]="true" [filterDelay]="0">
+  <ng-template pTemplate="header">
+      <tr>
+        <th style="text-align: center">
+          Date Placed
+        </th>
+        <th style="text-align: center">
+          Amount
+        </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-order>
+      <tr (click)="viewOrderDetails(order.orderNo)">
+          <td>
+              <div style="text-align: center; width: 100%">{{order.datePlaced}}</div>
+          </td>
+          <td>
+            <div style="text-align: center; width: 100%">{{order.amount}}</div>
+          </td>
+      </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [closable]="true" [(visible)]="showMoreInfoOnOrder" [modal]="true" [style]="{width: '80vw', height: '90vh'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" header="Order Details" [modal]="true"
+    styleClass="surface-section p-fluid" [contentStyle]="{'padding': '0px'}">
+    <ng-template pTemplate="content">
+      <div style="padding: 20px;">
+        <h3>Order Summary</h3>
+        <h5>Order No: {{this.order?.orderNo}}</h5>
+        <h5>Amount: ${{this.order?.amount}}</h5>
+        <h5>Date Placed: {{formatMyDate(this.order?.datePlaced)}}</h5>
+        <h5>Street Address 1: {{this.order?.streetAddress1}}</h5>
+        <h5>Street Address 2: {{this.order?.streetAddress2}}</h5>
+        <h5>Country: {{this.order?.country}}</h5>
+        <h5>Province: {{this.order?.province}}</h5>
+        <h5>City: {{this.order?.city}}</h5>
+
+      <h3>Products</h3>
+      <p-table [value]="products" [rows]="10" [paginator]="true" [rowHover]="true" [filterDelay]="0">
+        <ng-template pTemplate="header">
+            <tr>
+              <th style="text-align: center">
+                  Product Name
+              </th>
+              <th style="text-align: center">
+                Quantity
+              </th>
+              <th style="text-align: center">
+                Price
+              </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td >
+                    <div style="text-align: center; width: 100%">{{product.name}}</div>
+                </td>
+                <td >
+                  <div style="text-align: center; width: 100%">{{product.quantity}}</div>
+              </td>
+              <td >
+                <div style="text-align: center; width: 100%">{{product.price}}</div>
+            </td>
+            </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    </ng-template>
+</p-dialog>
