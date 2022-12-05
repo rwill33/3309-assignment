@@ -3,6 +3,7 @@ const express = require("express");
 const mysql = require('mysql');
 const fs = require("fs");
 const cors = require('cors');
+const { query } = require("express");
 
 const config = JSON.parse(fs.readFileSync('sqlconfig.json'));
 const connection = mysql.createConnection(config);
@@ -243,6 +244,71 @@ router.route('/order')
 router.route('/order/:storeId')
   .get((req,res) => {
     connection.query(`SELECT * FROM icommercestore.Order WHERE storeId='${req.params.storeId}';`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  })
+
+  router.route('/findStoreId/:storeName')
+  .get((req,res) => {
+    connection.query(`SELECT storeId FROM store WHERE storeName = '${req.params.storeName}'`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  })
+
+  router.route('/findAllStores')
+  .get((req,res) => {
+    connection.query(`SELECT storeName,storeId FROM store`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  })
+
+  
+  router.route('/bestSellar/:id')
+  .get((req,res) => {
+    
+    connection.query(`(SELECT O.productID, name, price, O.amount, quantity FROM product 
+      INNER JOIN (SELECT productId, amount FROM icommercestore.order 
+        INNER JOIN orderitem ON icommercestore.order.orderNo = orderitem.orderNo WHERE storeId = '${req.params.id}') O 
+      ON product.productID = O.productID)
+    ORDER BY price*amount*quantity DESC;`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  })
+  router.route('/findStoreAnnual/:id')
+  .get((req,res) => {
+    
+    connection.query(`SELECT T.storeName, SUM(sales) as store_total FROM (SELECT storeName, price*amount*quantity as sales FROM ((SELECT O.productID, O.storeId, name, price, O.amount, quantity FROM product 
+      INNER JOIN (SELECT productId, amount, storeId FROM icommercestore.order 
+        INNER JOIN orderitem ON icommercestore.order.orderNo = orderitem.orderNo WHERE storeId = '${req.params.id}') O 
+      ON product.productID = O.productID) C
+    INNER JOIN (SELECT storeName, storeId FROM store) S ON C.storeId = S.storeId)) T;`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  })
+
+  router.route('/findStoreNames/:storeName')
+  .get((req,res) => {
+    connection.query(`SELECT storeName,storeId FROM store WHERE storeName LIKE '%${req.params.storeName}%'  `, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {

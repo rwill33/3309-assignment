@@ -8,6 +8,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { StoreCreateComponent } from './components/store-create/store-create.component';
 import { UserStoresComponent } from './components/user-stores/user-stores.component';
 import { AuthenticationService } from './services/authentication.service';
+import { ViewStoresComponent } from './components/view-stores/view-stores.component';
 
 const routes: Routes = [
   { path: 'orders', component: OrdersComponent, canActivate: [AuthenticationService] },
@@ -16,7 +17,9 @@ const routes: Routes = [
   { path: 'user-stores', component: UserStoresComponent, canActivate: [AuthenticationService] },
   { path: 'store-create', component: StoreCreateComponent, canActivate: [AuthenticationService] },
   { path: 'sign-up', component: SignUpComponent },
+  {path: 'view-store',component: ViewStoresComponent, canActivate: [AuthenticationService]},
   { path: '**', component: SignInComponent },
+  
 ];
 
 @NgModule({
