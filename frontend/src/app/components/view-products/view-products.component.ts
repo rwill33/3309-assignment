@@ -12,6 +12,8 @@ import { Service } from 'src/app/services/service.service';
 export class ViewProductsComponent implements OnInit {
   @Input() products!: any[];
   @Input() isCartView!: boolean;
+  @Input() isAddProduct!: boolean;
+  @Input() storeId!: number;
   sortOptions: SelectItem[] = [];
   sortOrder: number = 1;
   sortField: string = '';
@@ -46,6 +48,12 @@ export class ViewProductsComponent implements OnInit {
       this.sortOrder = 1;
       this.sortField = value;
     }
+  }
+
+  public async addProductToStore(product: any){
+    console.log(product);
+    product.storeId = this.storeId;
+    await this.service.addProductToStore(product).toPromise();
   }
 
   public async addToCart(product: any) {

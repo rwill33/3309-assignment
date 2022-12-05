@@ -51,6 +51,9 @@
                     </div>
                     <div class="product-list-action">
                         <span class="product-price">${{product.price}}</span>
+                        <p-button *ngIf="isAddProduct" label="Add Product">
+
+                        </p-button>
                         <p-button *ngIf="!isCartView" (onClick)="addToCart(product)" icon="pi pi-shopping-cart"
                             [disabled]="product.quantity === 0" label="Add to cart">
                         </p-button>
@@ -97,6 +100,9 @@
                                 icon="pi pi-trash" class="p-button-danger mx-2" [style]="{'width': '50px'}"></button>
                             <p-button *ngIf="!isCartView" (onClick)="addToCart(product)" icon="pi pi-shopping-cart"
                                 [disabled]="product.quantity === 0" class="mx-2" [style]="{'width': '50px'}">
+                            </p-button>
+                            <p-button *ngIf="isAddProduct" (onClick)="addProductToStore(product)" label="Add Product">
+
                             </p-button>
                         </div>
                     </div>

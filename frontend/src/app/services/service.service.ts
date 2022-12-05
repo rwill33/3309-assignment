@@ -57,6 +57,10 @@ export class Service {
     return this.http.get<any>(this.url + '/findStoreNames/' + storeName)
   }
 
+  public addProductToStore(product: any){
+    return this.http.put<any>(this.url + '/store/' + product.storeId, product);
+  }
+
 
   // public async addRatingToProducts() {
   //   for (let i = 0; i < this.products.length; i++) {

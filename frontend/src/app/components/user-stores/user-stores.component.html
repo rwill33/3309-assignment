@@ -18,7 +18,7 @@
   </ng-template>
 </p-table>
 
-<p-dialog [closable]="true" [(visible)]="showMoreInfoOnStore" [modal]="true" [style]="{width: '80vw', height: '90vh'}"
+<p-dialog *ngIf="store && store.storeId" [closable]="true" [(visible)]="showMoreInfoOnStore" [modal]="true" [style]="{width: '80vw', height: '90vh'}"
     [draggable]="false" [resizable]="false" [maximizable]="true" header={{this.store?.storeName}} [modal]="true"
     styleClass="surface-section p-fluid" [contentStyle]="{'padding': '0px'}">
     <ng-template pTemplate="content">
@@ -69,7 +69,7 @@
           </ul>
         </p-tabPanel>
         <p-tabPanel header="Products">
-            Content 3
+          <app-view-products [products]="service.products" [isAddProduct] = "true" [storeId] = "store.storeId"></app-view-products>
         </p-tabPanel>
         <p-tabPanel header="Analytics">
           <h5>Best Sellers:</h5>
