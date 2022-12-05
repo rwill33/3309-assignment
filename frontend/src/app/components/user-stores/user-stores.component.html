@@ -68,9 +68,14 @@
             </li>
           </ul>
         </p-tabPanel>
-        <p-tabPanel header="Products">
+        <p-tabPanel header="Add Products">
           <app-view-products [products]="service.products" [isAddProduct] = "true" [storeId] = "store.storeId"></app-view-products>
         </p-tabPanel>
+        <p-tabPanel header="Store Products">
+          <app-view-products [products]="storeProducts"></app-view-products>
+        </p-tabPanel>
+        
+
         <p-tabPanel header="Analytics">
           <h5>Best Sellers:</h5>
         <ul>

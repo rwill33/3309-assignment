@@ -53,7 +53,8 @@ export class ViewProductsComponent implements OnInit {
   public async addProductToStore(product: any){
     console.log(product);
     product.storeId = this.storeId;
-    await this.service.addProductToStore(product).toPromise();
+    await this.service.addProductToStore(product).toPromise(); 
+    
   }
 
   public async addToCart(product: any) {
