@@ -8,6 +8,15 @@ const { query } = require("express");
 const config = JSON.parse(fs.readFileSync('sqlconfig.json'));
 const connection = mysql.createConnection(config);
 
+connection.connect((err) =>{
+  if(err){
+    console.log("Databse Connection Failed !!!", err);
+  }
+  else{
+    console.log("Connected to database!");
+  }
+})
+
 const router = express.Router();
 const app = express();
 
