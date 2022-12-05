@@ -110,7 +110,7 @@ router.route('/stores/:username')
 
 router.route('/products')
   .get((req, res) => {
-    connection.query(`SELECT * FROM Product`, (err, rows, fields) => {
+    connection.query(`SELECT p.*, AVG(r.rating) as avgRating FROM Product p LEFT JOIN Review r ON p.ProductID=r.productId GROUP BY p.productID;`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {
@@ -196,24 +196,21 @@ router.route('/cart/:username')
       }
     })
   })
-  .post((req, res) => {
-    connection.query(`UPDATE CartItem SET quantity=${req.body.quantity} WHERE username='${req.params.username}' AND productId=${req.body.productId};`, (err, rows, fields) => {
-      if (err) {
-        res.status(500).send(err)
-      } else {
-        res.send(rows);
-      }
-    })
-  })
   .delete((req, res) => {
-    connection.query(`DELETE FROM CartItem WHERE username='${req.params.username}' AND productId=${req.query.productId};`, (err, rows, fields) => {
+    connection.query(`UPDATE CartItem as c, (SELECT (quantity-1) as quantity FROM CartItem WHERE username='${req.params.username}' AND productId=${req.query.productId}) as q SET c.quantity = q.quantity WHERE username='${req.params.username}' AND productId=${req.query.productId};`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
       } else {
-        res.send(rows);
+        connection.query(`DELETE FROM CartItem WHERE username='${req.params.username}' AND productId=${req.query.productId} AND quantity=0;`, (err, rows, fields) => {
+          if (err) {
+            res.status(500).send(err)
+          } else {
+            res.send(rows);
+          }
+        })
       }
     })
-  })
+  });
 
 router.route('/order')
   .get((req,res) => {

@@ -61,4 +61,12 @@ export class AppComponent {
       }
     ];
   }
+
+  public getQuantityTotal() {
+    let total: number = 0;
+    this.service.cart.forEach((item) => {
+      total += item.quantity;
+    })
+    return total;
+  }
 }

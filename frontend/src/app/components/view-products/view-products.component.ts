@@ -64,11 +64,19 @@ export class ViewProductsComponent implements OnInit {
   }
 
   public getTotalPrice() {
-    let sum: number = 0;
-    for (let i = 0; i < this.service.cart.length; i++) {
-      sum += this.service.cart[i].price;
-    }
-    return sum;
+    let total: number = 0;
+    this.service.cart.forEach((item) => {
+      total += item.quantity * item.price;
+    })
+    return total;
+  }
+
+  public getQuantityTotal() {
+    let total: number = 0;
+    this.service.cart.forEach((item) => {
+      total += item.quantity;
+    })
+    return total;
   }
 
   public async openProduct(product: any) {
