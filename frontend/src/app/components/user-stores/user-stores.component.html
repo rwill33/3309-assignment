@@ -18,11 +18,82 @@
   </ng-template>
 </p-table>
 
-<p-dialog [closable]="true" [(visible)]="showMoreInfoOnStore" [modal]="true" [style]="{width: '80vw', height: '90vh'}"
+<p-dialog *ngIf="store && store.storeId" [closable]="true" [(visible)]="showMoreInfoOnStore" [modal]="true" [style]="{width: '80vw', height: '90vh'}"
     [draggable]="false" [resizable]="false" [maximizable]="true" header={{this.store?.storeName}} [modal]="true"
     styleClass="surface-section p-fluid" [contentStyle]="{'padding': '0px'}">
     <ng-template pTemplate="content">
-      <div style="padding: 20px;">
+      <p-tabView>
+        <p-tabPanel header="Summary">
+          <div *ngIf="this.editInfo == false">
+          <h5>Description: {{this.store?.description}}</h5>
+          <h5>Street Address 1: {{this.store?.streetAddress1}}</h5>
+          <h5>Street Address 2: {{this.store?.streetAddress2}}</h5>
+          <h5>Postal Code: {{this.store?.postalCode}}</h5>
+          <h5>Country: {{this.store?.country}}</h5>
+          <h5>Province: {{this.store?.province}}</h5>
+          <h5>City: {{this.store?.city}}</h5>
+          <button class="p-button" style="justify-content: center;" (click)="editSummary()">Edit</button>
+          </div>
+          <div *ngIf="this.editInfo == true">
+          <h5>Description: </h5>
+          <span class="p-float-label">
+            <input id="dInput" type="text" pInputText defaultValue= {{this.store?.description}} #description> 
+          </span>
+          <h5>Street Address 1: </h5>
+          <span class="p-float-label">
+            <input id="s1Input" type="text" pInputText defaultValue= {{this.store?.streetAddress1}} #streetAddress1> 
+          </span>
+          <h5>Street Address 2: </h5>
+          <span class="p-float-label">
+            <input id="s2Input" type="text" pInputText defaultValue= {{this.store?.streetAddress2}} #streetAddress2> 
+          </span>
+          <h5>Postal Code: </h5>
+          <span class="p-float-label">
+            <input id="pcInput" type="text" pInputText defaultValue= {{this.store?.postalCode}} #postalCode> 
+          </span>
+          <h5>Country:</h5>
+          <span class="p-float-label">
+            <input id="coInput" type="text" pInputText defaultValue= {{this.store?.country}} #country> 
+          </span>
+          <h5>Province: </h5>
+          <span class="p-float-label">
+            <input id="prInput" type="text" pInputText defaultValue= {{this.store?.province}} #province>  
+          </span>
+          <h5>City: </h5>
+          <span class="p-float-label">
+            <input id="ciInpit" type="text" pInputText defaultValue= {{this.store?.city}} #city> 
+          </span>
+          <button class="p-button" style="justify-content: center;" (click)="saveEdit(description.value, streetAddress1.value, streetAddress2.value, postalCode.value, country.value, province.value, city.value)">Save</button>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="Orders">
+          <ul>
+            <li *ngFor="let order of orders">
+              {{order?.orderNo}}
+            </li>
+          </ul>
+        </p-tabPanel>
+        <p-tabPanel header="Add Products">
+          <app-view-products [products]="service.products" [isAddProduct] = "true" [storeId] = "store.storeId"></app-view-products>
+        </p-tabPanel>
+        <p-tabPanel header="Store Products">
+          <app-view-products [products]="storeProducts"></app-view-products>
+        </p-tabPanel>
+        
+
+        <p-tabPanel header="Analytics">
+          <h5>Best Sellers:</h5>
+        <ul>
+          <li *ngFor="let product of bestSellers">
+            {{product?.name}}
+          </li>
+        </ul>
+        <h5>Total Sales: ${{totalSales?.total ? totalSales?.total : 0}}</h5>
+        <h5>Number of Orders: {{totalSales?.numOfOrders ? totalSales?.numOfOrders : 0}}</h5>
+        <h5>Number of Products Sold: {{totalSales?.numOfProductsSold ? totalSales?.numOfProductsSold : 0}}</h5> -->
+      </p-tabPanel>
+    </p-tabView>
+      <!-- <div style="padding: 20px;">
         <h3>Store Summary</h3>
         <h5>Description: {{this.store?.description}}</h5>
         <h5>Street Address 1: {{this.store?.streetAddress1}}</h5>
@@ -52,7 +123,7 @@
         </ul>
         <h5>Total Sales: ${{totalSales?.total ? totalSales?.total : 0}}</h5>
         <h5>Number of Orders: {{totalSales?.numOfOrders ? totalSales?.numOfOrders : 0}}</h5>
-        <h5>Number of Products Sold: {{totalSales?.numOfProductsSold ? totalSales?.numOfProductsSold : 0}}</h5>
-      </div>
+        <h5>Number of Products Sold: {{totalSales?.numOfProductsSold ? totalSales?.numOfProductsSold : 0}}</h5> -->
+      <!-- </div> -->
     </ng-template>
 </p-dialog>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Service } from 'src/app/services/service.service';
 
+
 @Component({
   selector: 'app-user-stores',
   templateUrl: './user-stores.component.html',
@@ -13,6 +14,7 @@ export class UserStoresComponent implements OnInit {
   public orders?: any;
   public bestSellers?: any;
   public totalSales?: any;
+  editInfo: boolean = false;
   showMoreInfoOnStore:boolean = false;
   fields = ['storeName', 'storeId', 'city', 'country', 'description', 'postalCode', 'province', 'streetAddress1', 'streetAddress2'];
   constructor(public service: Service) {
@@ -23,13 +25,14 @@ export class UserStoresComponent implements OnInit {
   }
 
   public async populateUserStores() {
-    if (this.service.stores.length == 0) {
+    //if (this.service.stores.length == 0) {
       this.service.stores = await this.service.getUserStores().toPromise();
-    }
-    for (let i = 0; i < this.service.stores.length; i++) {
-      this.storeOrders.push(await this.service.getStoreOrders(this.service.stores[i].storeId).toPromise());
-    }
+    // for (let i = 0; i < this.service.stores.length; i++) {
+    //   this.storeOrders.push(await this.service.getStoreOrders(this.service.stores[i].storeId).toPromise());
+    // }
+    this.showMoreInfoOnStore = false;
   }
+  
 
   viewStoreDetails(id: any) {
     this.getStoreDetails(id);
@@ -38,7 +41,9 @@ export class UserStoresComponent implements OnInit {
     this.getBestSellers(id);
     this.getTotalSales(id);
     this.showMoreInfoOnStore = true;
+    
   }
+  
 
   async getStoreDetails(id:number){
     let response = await this.service.getStoreById(id).toPromise();
@@ -66,4 +71,17 @@ export class UserStoresComponent implements OnInit {
     this.totalSales = response[0];
     console.log(this.totalSales);
   }
+  editSummary() {
+     this.editInfo = true;
+  }
+  async saveEdit(description:any, streetAddress1: any, streetAddress2: any, postalCode: any, country: any, province: any, city: any) {
+    console.log(description, streetAddress1, streetAddress2, postalCode, country, province, city);
+    this.editInfo = false;
+    await this.service.putStoreInfo(this.store.storeId, description, streetAddress1, streetAddress2, postalCode, country, province, city).toPromise();
+    //console.log(response);
+    this.populateUserStores();
+    // this.showMoreInfoOnStore = false;
+  }
+  
+  
 }

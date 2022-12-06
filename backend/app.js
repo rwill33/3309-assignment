@@ -159,6 +159,7 @@ router.route('/store/:storeId')
     })
   })
   .post((req, res) => {
+    console.log(req.body);
     let changes = Object.keys(req.body);
     let changesString;
     changes.forEach((change, index) => {
@@ -171,6 +172,7 @@ router.route('/store/:storeId')
     connection.query(`UPDATE Store SET ${changesString} WHERE storeId=${req.params.storeId};`, (err, rows, fields) => {
       if (err) {
         res.status(500).send(err)
+        console.log(err);
       } else {
         res.send(rows);
       }
