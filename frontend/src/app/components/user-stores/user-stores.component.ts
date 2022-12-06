@@ -14,8 +14,7 @@ export class UserStoresComponent implements OnInit {
   public orders?: any;
   public bestSellers?: any;
   public totalSales?: any;
-  disableEdit: boolean = true;
-  btnName: string = 'edit';
+  editInfo: boolean = false;
   showMoreInfoOnStore:boolean = false;
   fields = ['storeName', 'storeId', 'city', 'country', 'description', 'postalCode', 'province', 'streetAddress1', 'streetAddress2'];
   constructor(public service: Service) {
@@ -26,12 +25,12 @@ export class UserStoresComponent implements OnInit {
   }
 
   public async populateUserStores() {
-    if (this.service.stores.length == 0) {
+    //if (this.service.stores.length == 0) {
       this.service.stores = await this.service.getUserStores().toPromise();
-    }
-    for (let i = 0; i < this.service.stores.length; i++) {
-      this.storeOrders.push(await this.service.getStoreOrders(this.service.stores[i].storeId).toPromise());
-    }
+    // for (let i = 0; i < this.service.stores.length; i++) {
+    //   this.storeOrders.push(await this.service.getStoreOrders(this.service.stores[i].storeId).toPromise());
+    // }
+    this.showMoreInfoOnStore = false;
   }
   
 
@@ -73,20 +72,16 @@ export class UserStoresComponent implements OnInit {
     console.log(this.totalSales);
   }
   editSummary() {
-    this.disableEdit = !this.disableEdit;
-    this.setBtnName(this.disableEdit);
+     this.editInfo = true;
   }
-  setBtnName(b: boolean){
-      if(b == false){
-        this.btnName = 'save';
-      }
-      else{ 
-        //this.saveSummary();
-        this.btnName = 'edit';
-      }
+  async saveEdit(description:any, streetAddress1: any, streetAddress2: any, postalCode: any, country: any, province: any, city: any) {
+    console.log(description, streetAddress1, streetAddress2, postalCode, country, province, city);
+    this.editInfo = false;
+    await this.service.putStoreInfo(this.store.storeId, description, streetAddress1, streetAddress2, postalCode, country, province, city).toPromise();
+    //console.log(response);
+    this.populateUserStores();
+    // this.showMoreInfoOnStore = false;
   }
-  // async saveSummary() {
-
-  // }
+  
   
 }

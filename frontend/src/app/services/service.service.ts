@@ -28,6 +28,9 @@ export class Service {
   public putStore(store: any): Observable<any> {
     return this.http.put<any>(this.url + '/store', store);
   }
+  public putStoreInfo(storeId: any, description: any, streetAddress1: any, streetAddress2: any, postalCode: any,country: any, province: any, city: any): Observable<any> {
+    return this.http.post<any>(this.url + '/store/'+ storeId, {description: description, streetAddress1: streetAddress1, streetAddress2: streetAddress2, postalCode: postalCode, country: country, province: province, city: city});
+  }
 
   public getUserStores(): Observable<any> {
     return this.http.get<any>(this.url + '/stores/' + this.username);

@@ -24,42 +24,47 @@
     <ng-template pTemplate="content">
       <p-tabView>
         <p-tabPanel header="Summary">
+          <div *ngIf="this.editInfo == false">
+          <h5>Description: {{this.store?.description}}</h5>
+          <h5>Street Address 1: {{this.store?.streetAddress1}}</h5>
+          <h5>Street Address 2: {{this.store?.streetAddress2}}</h5>
+          <h5>Postal Code: {{this.store?.postalCode}}</h5>
+          <h5>Country: {{this.store?.country}}</h5>
+          <h5>Province: {{this.store?.province}}</h5>
+          <h5>City: {{this.store?.city}}</h5>
+          <button class="p-button" style="justify-content: center;" (click)="editSummary()">Edit</button>
+          </div>
+          <div *ngIf="this.editInfo == true">
           <h5>Description: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText [disabled]=disableEdit> 
-            <label for="float-input">{{this.store?.description}}</label>
+            <input id="dInput" type="text" pInputText defaultValue= {{this.store?.description}} #description> 
           </span>
           <h5>Street Address 1: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
-            <label for="float-input">{{this.store?.streetAddress1}}</label>
+            <input id="s1Input" type="text" pInputText defaultValue= {{this.store?.streetAddress1}} #streetAddress1> 
           </span>
           <h5>Street Address 2: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
-            <label for="float-input">{{this.store?.streetAddress2}}</label>
+            <input id="s2Input" type="text" pInputText defaultValue= {{this.store?.streetAddress2}} #streetAddress2> 
           </span>
           <h5>Postal Code: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
-            <label for="float-input">{{this.store?.postalCode}}</label>
+            <input id="pcInput" type="text" pInputText defaultValue= {{this.store?.postalCode}} #postalCode> 
           </span>
           <h5>Country:</h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
-            <label for="float-input">{{this.store?.country}}</label>
+            <input id="coInput" type="text" pInputText defaultValue= {{this.store?.country}} #country> 
           </span>
           <h5>Province: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
-            <label for="float-input">{{this.store?.province}}</label>
+            <input id="prInput" type="text" pInputText defaultValue= {{this.store?.province}} #province>  
           </span>
           <h5>City: </h5>
           <span class="p-float-label">
-            <input id="float-input" type="text" pInputText pInputText [disabled]=disableEdit> 
-            <label for="float-input">{{this.store?.city}}</label>
+            <input id="ciInpit" type="text" pInputText defaultValue= {{this.store?.city}} #city> 
           </span>
-          <button class="p-button" style="justify-content: center;" (click)="editSummary()">{{this.btnName}}</button>
+          <button class="p-button" style="justify-content: center;" (click)="saveEdit(description.value, streetAddress1.value, streetAddress2.value, postalCode.value, country.value, province.value, city.value)">Save</button>
+          </div>
         </p-tabPanel>
         <p-tabPanel header="Orders">
           <ul>
