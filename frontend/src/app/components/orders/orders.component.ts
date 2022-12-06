@@ -8,6 +8,10 @@ import { Service } from 'src/app/services/service.service';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
+  fields = ['datePlaced', 'amount'];
+  order?: any;
+  products?: any;
+  showMoreInfoOnOrder: boolean = false;
   constructor(public service: Service) { }
 
   async ngOnInit(): Promise<void> {
@@ -20,6 +24,21 @@ export class OrdersComponent implements OnInit {
       order.amount = `$${order.amount.toFixed(2)}`;
     });
     this.service.customerOrders = orders;
+  }
+
+  async viewOrderDetails(orderNo: number){
+    let response = await this.service.getOrderDetailsById(orderNo).toPromise();
+    this.order = response[0];
+    this.products = await this.service.getOrderProductsById(orderNo).toPromise();
+    console.log(this.order);
+    console.log(this.products);
+    this.showMoreInfoOnOrder = true;
+  }
+
+  formatMyDate(date: any) {
+    const format = 'dd/MM/yyyy';
+    const locale = 'en-US';
+    return formatDate(date, format, locale);
   }
 
 }

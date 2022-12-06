@@ -43,3 +43,6 @@ Thumbs.db
 
 # package lock
 package-lock.json
+
+#own mysql login file
+sqlconfig.json

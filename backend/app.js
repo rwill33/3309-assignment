@@ -8,6 +8,15 @@ const { query } = require("express");
 const config = JSON.parse(fs.readFileSync('sqlconfig.json'));
 const connection = mysql.createConnection(config);
 
+connection.connect((err) =>{
+  if(err){
+    console.log("Databse Connection Failed !!!", err);
+  }
+  else{
+    console.log("Connected to database!");
+  }
+})
+
 const router = express.Router();
 const app = express();
 
@@ -248,25 +257,37 @@ router.route('/order')
       if (err) {
         res.status(500).send(err)
       } else {
-        connection.query(`INSERT INTO OrderItem (orderNo, productId, quantity)
-          SELECT orderNo, productId, quantity
-          FROM icommercestore.CartItem c, icommercestore.Order o
-          WHERE orderNo = LAST_INSERT_ID() AND c.username = "${req.body.username}";`, (err, rows, fields) => {
-          if (err) {
+        connection.query(`DELETE FROM CartItem WHERE username='${req.body.username}'`, (err, rows, fields) => {
+          if(err) {
             res.status(500).send(err)
           } else {
-            connection.query(`DELETE FROM CartItem WHERE username='${req.body.username}'`, (err, rows, fields) => {
-              if (err) {
-                res.status(500).send(err)
-              } else {
-                res.send(rows);
-              }
-            })
+            res.send(rows);
           }
         })
       }
-    })
+    });
   })
+
+router.route('/order/details/:orderNo')
+  .get((req, res) => {
+    connection.query(`SELECT orderNo, amount, datePlaced, streetAddress1, streetAddress2, country, city, province FROM icommercestore.Order o JOIN CustomerAddress a ON o.username=a.username AND o.addressNo=a.addressNo WHERE orderNo=${req.params.orderNo};`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  });
+router.route('/order/products/:orderNo')
+  .get((req, res) => {
+    connection.query(`SELECT oi.quantity, name, price FROM OrderItem oi JOIN Product p ON oi.productId=p.productId WHERE oi.orderNo=${req.params.orderNo};`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  });
 
 router.route('/order/:storeId')
   .get((req,res) => {
@@ -337,6 +358,24 @@ router.route('/order/:storeId')
       }
     })
   })
+
+  router.route('/addReview')
+  .put((req,res) => {
+
+console.log(req.body.username)
+console.log(req.body.id)
+console.log(req.body.textRating)
+console.log(req.body.numberRating)
+
+    connection.query(`INSERT INTO review (username,productId,message,rating) VALUES ('${req.body.username}','${req.body.id}','${req.body.textRating}','${req.body.numberRating}')`, (err, rows, fields) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.send(rows);
+      }
+    })
+  })
+
 
 
 router.route('/')

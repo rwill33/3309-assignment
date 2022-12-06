@@ -64,6 +64,14 @@ export class Service {
     return this.http.put<any>(this.url + '/store/' + product.storeId, product);
   }
 
+  public getOrderDetailsById(id: number): Observable<any> {
+    return this.http.get<any>(this.url + '/order/details/' + id);
+  }
+
+  public getOrderProductsById(id: number): Observable<any> {
+    return this.http.get<any>(this.url + '/order/products/' + id);
+  }
+
 
   // public async addRatingToProducts() {
   //   for (let i = 0; i < this.products.length; i++) {
@@ -117,6 +125,9 @@ export class Service {
 
   public getAllStores(){
     return this.http.get<any>(this.url + '/findAllStores');
+  }
+  public putReview(id:number,textRating:string,numberRating:number){
+    return this.http.put<any>(this.url + '/addReview',{username:this.username,id,textRating,numberRating});
   }
 
 
